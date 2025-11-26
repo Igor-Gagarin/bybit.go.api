@@ -1,5 +1,7 @@
 package models
 
+import "net/http"
+
 type OrderResult struct {
 	OrderId     string `json:"orderId"`
 	OrderLinkId string `json:"orderLinkId"`
@@ -88,5 +90,6 @@ type BatchOrderServerResponse struct {
 			Msg  string `json:"msg"`
 		} `json:"list"`
 	} `json:"retExtInfo"`
-	Time int64 `json:"time"`
+	Time    int64       `json:"time"`
+	Headers http.Header `json:"-"`
 }

@@ -16,8 +16,8 @@ func (s *BybitClientRequest) GetPositionList(ctx context.Context, opts ...Reques
 		endpoint: "/v5/position/list",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) SetPositionLeverage(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -29,8 +29,8 @@ func (s *BybitClientRequest) SetPositionLeverage(ctx context.Context, opts ...Re
 		endpoint: "/v5/position/set-leverage",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) SwitchPositionMargin(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -42,8 +42,8 @@ func (s *BybitClientRequest) SwitchPositionMargin(ctx context.Context, opts ...R
 		endpoint: "/v5/position/switch-isolated",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // Deprecated: SetPositionTpslMode is deprecated.
@@ -57,8 +57,8 @@ func (s *BybitClientRequest) SetPositionTpslMode(ctx context.Context, opts ...Re
 		endpoint: "/v5/position/set-tpsl-mode",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) SwitchPositionMode(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -70,8 +70,8 @@ func (s *BybitClientRequest) SwitchPositionMode(ctx context.Context, opts ...Req
 		endpoint: "/v5/position/switch-mode",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // Deprecated: SetPositionRiskLimit is deprecated.
@@ -85,8 +85,8 @@ func (s *BybitClientRequest) SetPositionRiskLimit(ctx context.Context, opts ...R
 		endpoint: "/v5/position/set-risk-limit",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) SetPositionTradingStop(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -98,8 +98,8 @@ func (s *BybitClientRequest) SetPositionTradingStop(ctx context.Context, opts ..
 		endpoint: "/v5/position/trading-stop",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) SetPositionAutoMargin(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -111,8 +111,8 @@ func (s *BybitClientRequest) SetPositionAutoMargin(ctx context.Context, opts ...
 		endpoint: "/v5/position/set-auto-add-margin",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) UpdatePositionMargin(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -124,8 +124,8 @@ func (s *BybitClientRequest) UpdatePositionMargin(ctx context.Context, opts ...R
 		endpoint: "/v5/position/add-margin",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) ConfirmPositionRiskLimit(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -137,8 +137,8 @@ func (s *BybitClientRequest) ConfirmPositionRiskLimit(ctx context.Context, opts 
 		endpoint: "/v5/position/confirm-pending-mmr",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) MovePosition(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -150,8 +150,8 @@ func (s *BybitClientRequest) MovePosition(ctx context.Context, opts ...RequestOp
 		endpoint: "/v5/position/move-positions",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetMovePositionHistory(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -163,8 +163,8 @@ func (s *BybitClientRequest) GetMovePositionHistory(ctx context.Context, opts ..
 		endpoint: "/v5/position/move-history",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetClosePnl(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -176,8 +176,8 @@ func (s *BybitClientRequest) GetClosePnl(ctx context.Context, opts ...RequestOpt
 		endpoint: "/v5/position/closed-pnl",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetOptionClosedPosition(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -189,6 +189,6 @@ func (s *BybitClientRequest) GetOptionClosedPosition(ctx context.Context, opts .
 		endpoint: "/v5/position/get-closed-positions",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }

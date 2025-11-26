@@ -15,8 +15,8 @@ func (s *BybitClientRequest) CreateSubMember(ctx context.Context, opts ...Reques
 		endpoint: "/v5/user/create-sub-member",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) CreateSubApiKey(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -28,8 +28,8 @@ func (s *BybitClientRequest) CreateSubApiKey(ctx context.Context, opts ...Reques
 		endpoint: "/v5/user/create-sub-api",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) FreezeSubUID(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -41,8 +41,8 @@ func (s *BybitClientRequest) FreezeSubUID(ctx context.Context, opts ...RequestOp
 		endpoint: "/v5/user/frozen-sub-member",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) ModifyMasterAPIKey(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -54,8 +54,8 @@ func (s *BybitClientRequest) ModifyMasterAPIKey(ctx context.Context, opts ...Req
 		endpoint: "/v5/user/update-api",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) ModifySubAPIKey(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -67,8 +67,8 @@ func (s *BybitClientRequest) ModifySubAPIKey(ctx context.Context, opts ...Reques
 		endpoint: "/v5/user/update-sub-api",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) DeleteSubUID(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -80,8 +80,8 @@ func (s *BybitClientRequest) DeleteSubUID(ctx context.Context, opts ...RequestOp
 		endpoint: "/v5/user/del-submember",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) DeleteMasterAPIKey(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -93,8 +93,8 @@ func (s *BybitClientRequest) DeleteMasterAPIKey(ctx context.Context, opts ...Req
 		endpoint: "/v5/user/delete-api",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) DeleteSubAPIKey(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -106,8 +106,8 @@ func (s *BybitClientRequest) DeleteSubAPIKey(ctx context.Context, opts ...Reques
 		endpoint: "/v5/user/delete-sub-api",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetSubUidList(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -119,8 +119,8 @@ func (s *BybitClientRequest) GetSubUidList(ctx context.Context, opts ...RequestO
 		endpoint: "/v5/user/query-sub-members",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetSubUidListUnlimited(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -132,8 +132,8 @@ func (s *BybitClientRequest) GetSubUidListUnlimited(ctx context.Context, opts ..
 		endpoint: "/v5/user/submembers",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetCustodianSubAccounts(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -145,8 +145,8 @@ func (s *BybitClientRequest) GetCustodianSubAccounts(ctx context.Context, opts .
 		endpoint: "/v5/user/escrow_sub_members",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetAPIKeyInfo(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -155,8 +155,8 @@ func (s *BybitClientRequest) GetAPIKeyInfo(ctx context.Context, opts ...RequestO
 		endpoint: "/v5/user/query-api",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetSubUidApiKeysInfo(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -165,8 +165,8 @@ func (s *BybitClientRequest) GetSubUidApiKeysInfo(ctx context.Context, opts ...R
 		endpoint: "/v5/user/sub-apikeys",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetUidWalletType(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -178,8 +178,8 @@ func (s *BybitClientRequest) GetUidWalletType(ctx context.Context, opts ...Reque
 		endpoint: "/v5/user/get-member-type",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetAffiliateUserInfo(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -191,8 +191,8 @@ func (s *BybitClientRequest) GetAffiliateUserInfo(ctx context.Context, opts ...R
 		endpoint: "/v5/user/aff-customer-info",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetAffiliateUserList(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -204,6 +204,6 @@ func (s *BybitClientRequest) GetAffiliateUserList(ctx context.Context, opts ...R
 		endpoint: "/v5/user/aff-customer-list",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }

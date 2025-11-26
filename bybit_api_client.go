@@ -33,15 +33,16 @@ type ServerResponse struct {
 	Result     interface{} `json:"result"`
 	RetExtInfo struct{}    `json:"retExtInfo"`
 	Time       int64       `json:"time"`
+	Headers    http.Header `json:"-"` // Response headers for rate limit tracking
 }
 
-func SendRequest(ctx context.Context, opts []RequestOption, r *request, s *BybitClientRequest, err error) ([]byte, error) {
+func SendRequest(ctx context.Context, opts []RequestOption, r *request, s *BybitClientRequest, err error) ([]byte, http.Header, error) {
 	r.setParams(s.params)
-	data, err := s.c.callAPI(ctx, r, opts...)
-	return data, err
+	data, headers, err := s.c.callAPI(ctx, r, opts...)
+	return data, headers, err
 }
 
-func GetServerResponse(err error, data []byte) (*ServerResponse, error) {
+func GetServerResponse(err error, data []byte, headers http.Header) (*ServerResponse, error) {
 	if err != nil {
 		return nil, err
 	}
@@ -50,10 +51,13 @@ func GetServerResponse(err error, data []byte) (*ServerResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+	if headers != nil {
+		resp.Headers = headers
+	}
 	return resp, nil
 }
 
-func GetBatchOrderServerResponse(err error, data []byte) (*models.BatchOrderServerResponse, error) {
+func GetBatchOrderServerResponse(err error, data []byte, headers http.Header) (*models.BatchOrderServerResponse, error) {
 	if err != nil {
 		return nil, err
 	}
@@ -61,6 +65,9 @@ func GetBatchOrderServerResponse(err error, data []byte) (*models.BatchOrderServ
 	err = json.Unmarshal(data, resp)
 	if err != nil {
 		return nil, err
+	}
+	if headers != nil {
+		resp.Headers = headers
 	}
 	return resp, nil
 }
@@ -217,14 +224,14 @@ func (c *Client) parseRequest(r *request, opts ...RequestOption) (err error) {
 	return nil
 }
 
-func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption) (data []byte, err error) {
+func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption) (data []byte, headers http.Header, err error) {
 	err = c.parseRequest(r, opts...)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	req, err := http.NewRequest(r.method, r.fullURL, r.body)
 	if err != nil {
-		return []byte{}, err
+		return []byte{}, nil, err
 	}
 	req = req.WithContext(ctx)
 	req.Header = r.header
@@ -235,11 +242,11 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption)
 	}
 	res, err := f(req)
 	if err != nil {
-		return []byte{}, err
+		return []byte{}, nil, err
 	}
 	data, err = io.ReadAll(res.Body)
 	if err != nil {
-		return []byte{}, err
+		return []byte{}, nil, err
 	}
 	defer func() {
 		cerr := res.Body.Close()
@@ -261,9 +268,9 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption)
 		if e != nil {
 			c.debug("failed to unmarshal json: %s", e)
 		}
-		return nil, apiErr
+		return nil, res.Header, apiErr
 	}
-	return data, nil
+	return data, res.Header, nil
 }
 
 // NewPlaceOrderService quick order endpoint

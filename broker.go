@@ -15,8 +15,8 @@ func (s *BybitClientRequest) GetBrokerEarning(ctx context.Context, opts ...Reque
 		endpoint: "/v5/broker/earnings-info",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetBrokerAccountInfo(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -28,8 +28,8 @@ func (s *BybitClientRequest) GetBrokerAccountInfo(ctx context.Context, opts ...R
 		endpoint: "/v5/broker/account-info",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetAllSubMembersDepositRecords(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -41,8 +41,8 @@ func (s *BybitClientRequest) GetAllSubMembersDepositRecords(ctx context.Context,
 		endpoint: "/v5/broker/asset/query-sub-member-deposit-record",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // Broker Reward
@@ -55,8 +55,8 @@ func (s *BybitClientRequest) QueryBrokerVoucherSpec(ctx context.Context, opts ..
 		endpoint: "/v5/broker/award/info",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) DistributeBrokerVoucher(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -68,8 +68,8 @@ func (s *BybitClientRequest) DistributeBrokerVoucher(ctx context.Context, opts .
 		endpoint: "/v5/broker/award/distribute-award",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) QueryDistributedBrokerVoucher(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -81,8 +81,8 @@ func (s *BybitClientRequest) QueryDistributedBrokerVoucher(ctx context.Context, 
 		endpoint: "/v5/broker/award/distribution-record",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // Broker Reward End

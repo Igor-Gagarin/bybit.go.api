@@ -263,7 +263,7 @@ func (order *Order) Do(ctx context.Context, opts ...RequestOption) (res *ServerR
 		m["slippageToleranceType"] = *order.slippageToleranceType
 	}
 	r.setParams(m)
-	data, err := order.c.callAPI(ctx, r, opts...)
+	data, headers, err := order.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -271,6 +271,9 @@ func (order *Order) Do(ctx context.Context, opts ...RequestOption) (res *ServerR
 	err = json.Unmarshal(data, res)
 	if err != nil {
 		return nil, err
+	}
+	if headers != nil {
+		res.Headers = headers
 	}
 	return res, nil
 }

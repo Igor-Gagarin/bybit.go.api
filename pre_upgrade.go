@@ -15,8 +15,8 @@ func (s *BybitClientRequest) GetPreUpgradeOrderHistory(ctx context.Context, opts
 		endpoint: "/v5/pre-upgrade/order/history",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetPreUpgradeTradeHistory(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -28,8 +28,8 @@ func (s *BybitClientRequest) GetPreUpgradeTradeHistory(ctx context.Context, opts
 		endpoint: "/v5/pre-upgrade/execution/list",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetPreUpgradeClosedPnl(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -41,8 +41,8 @@ func (s *BybitClientRequest) GetPreUpgradeClosedPnl(ctx context.Context, opts ..
 		endpoint: "/v5/pre-upgrade/position/closed-pnl",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetPreUpgradeTransactionLog(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -54,8 +54,8 @@ func (s *BybitClientRequest) GetPreUpgradeTransactionLog(ctx context.Context, op
 		endpoint: "/v5/pre-upgrade/account/transaction-log",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetPreUpgradeOptionDeliveryRecord(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -67,8 +67,8 @@ func (s *BybitClientRequest) GetPreUpgradeOptionDeliveryRecord(ctx context.Conte
 		endpoint: "/v5/pre-upgrade/asset/delivery-record",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetPreUpgradeUsdcSettlement(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -80,6 +80,6 @@ func (s *BybitClientRequest) GetPreUpgradeUsdcSettlement(ctx context.Context, op
 		endpoint: "/v5/pre-upgrade/asset/settlement-record",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }

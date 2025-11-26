@@ -13,8 +13,8 @@ func (s *BybitClientRequest) GetBorrowableCoins(ctx context.Context, opts ...Req
 		endpoint: "/v5/crypto-loan-common/loanable-data",
 		secType:  secTypeNone,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetCollateralCoins(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -23,8 +23,8 @@ func (s *BybitClientRequest) GetCollateralCoins(ctx context.Context, opts ...Req
 		endpoint: "/v5/crypto-loan-common/collateral-data",
 		secType:  secTypeNone,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetMaxCollateralAmount(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -33,8 +33,8 @@ func (s *BybitClientRequest) GetMaxCollateralAmount(ctx context.Context, opts ..
 		endpoint: "/v5/crypto-loan-common/max-collateral-amount",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) AdjustCollateralAmount(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -43,8 +43,8 @@ func (s *BybitClientRequest) AdjustCollateralAmount(ctx context.Context, opts ..
 		endpoint: "/v5/crypto-loan-common/adjust-ltv",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetCollateralAdjustHistory(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -53,8 +53,8 @@ func (s *BybitClientRequest) GetCollateralAdjustHistory(ctx context.Context, opt
 		endpoint: "/v5/crypto-loan-common/adjustment-history",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetCryptoLoanPosition(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -63,8 +63,8 @@ func (s *BybitClientRequest) GetCryptoLoanPosition(ctx context.Context, opts ...
 		endpoint: "/v5/crypto-loan-common/position",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // Flexible loan
@@ -75,8 +75,8 @@ func (s *BybitClientRequest) BorrowFlexibleLoan(ctx context.Context, opts ...Req
 		endpoint: "/v5/crypto-loan-flexible/borrow",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) RepayFlexibleLoan(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -85,8 +85,8 @@ func (s *BybitClientRequest) RepayFlexibleLoan(ctx context.Context, opts ...Requ
 		endpoint: "/v5/crypto-loan-flexible/repay",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetFlexibleLoans(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -95,8 +95,8 @@ func (s *BybitClientRequest) GetFlexibleLoans(ctx context.Context, opts ...Reque
 		endpoint: "/v5/crypto-loan-flexible/ongoing-coin",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetFlexibleBorrowHistory(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -105,8 +105,8 @@ func (s *BybitClientRequest) GetFlexibleBorrowHistory(ctx context.Context, opts 
 		endpoint: "/v5/crypto-loan-flexible/borrow-history",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetFlexibleRepaymentHistory(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -115,8 +115,8 @@ func (s *BybitClientRequest) GetFlexibleRepaymentHistory(ctx context.Context, op
 		endpoint: "/v5/crypto-loan-flexible/repayment-history",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // Fixed Loan
@@ -127,8 +127,8 @@ func (s *BybitClientRequest) GetFixedSupplyingMarket(ctx context.Context, opts .
 		endpoint: "/v5/crypto-loan-fixed/supply-order-quote",
 		secType:  secTypeNone,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetFixedBorrowingMarket(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -137,8 +137,8 @@ func (s *BybitClientRequest) GetFixedBorrowingMarket(ctx context.Context, opts .
 		endpoint: "/v5/crypto-loan-fixed/borrow-order-quote",
 		secType:  secTypeNone,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetFixedBorrowHistory(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -147,8 +147,8 @@ func (s *BybitClientRequest) GetFixedBorrowHistory(ctx context.Context, opts ...
 		endpoint: "/v5/crypto-loan-fixed/borrow-order-info",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetFixedSupplyHistory(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -157,8 +157,8 @@ func (s *BybitClientRequest) GetFixedSupplyHistory(ctx context.Context, opts ...
 		endpoint: "/v5/crypto-loan-fixed/supply-order-info",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetFixedBorrowContract(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -167,8 +167,8 @@ func (s *BybitClientRequest) GetFixedBorrowContract(ctx context.Context, opts ..
 		endpoint: "/v5/crypto-loan-fixed/borrow-contract-info",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetFixedSupplyContract(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -177,8 +177,8 @@ func (s *BybitClientRequest) GetFixedSupplyContract(ctx context.Context, opts ..
 		endpoint: "/v5/crypto-loan-fixed/supply-contract-info",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) FixedLoanRepaymentHistory(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -187,8 +187,8 @@ func (s *BybitClientRequest) FixedLoanRepaymentHistory(ctx context.Context, opts
 		endpoint: "/v5/crypto-loan-fixed/repayment-history",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) BorrowFixedLoan(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -197,8 +197,8 @@ func (s *BybitClientRequest) BorrowFixedLoan(ctx context.Context, opts ...Reques
 		endpoint: "/v5/crypto-loan-fixed/borrow",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) RepayFixedLoan(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -207,8 +207,8 @@ func (s *BybitClientRequest) RepayFixedLoan(ctx context.Context, opts ...Request
 		endpoint: "/v5/crypto-loan-fixed/fully-repay",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) CancelBorrowFixedLoan(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -217,8 +217,8 @@ func (s *BybitClientRequest) CancelBorrowFixedLoan(ctx context.Context, opts ...
 		endpoint: "/v5/crypto-loan-fixed/borrow-order-cancel",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) CancelSupplyFixedLoan(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -227,8 +227,8 @@ func (s *BybitClientRequest) CancelSupplyFixedLoan(ctx context.Context, opts ...
 		endpoint: "/v5/crypto-loan-fixed/supply-order-cancel",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) SupplyFixedLoan(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -237,8 +237,8 @@ func (s *BybitClientRequest) SupplyFixedLoan(ctx context.Context, opts ...Reques
 		endpoint: "/v5/crypto-loan-fixed/supply",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // RepayCollateral

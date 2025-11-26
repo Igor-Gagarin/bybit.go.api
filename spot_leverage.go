@@ -16,8 +16,8 @@ func (s *BybitClientRequest) GetLeverageTokenInfo(ctx context.Context, opts ...R
 		endpoint: "/v5/spot-lever-token/info",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // Deprecated: GetLeverageTokenOrders is deprecated.
@@ -30,8 +30,8 @@ func (s *BybitClientRequest) GetLeverageTokenOrders(ctx context.Context, opts ..
 		endpoint: "/v5/spot-lever-token/order-record",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // Deprecated: GetLeverageTokenMarket is deprecated.
@@ -44,8 +44,8 @@ func (s *BybitClientRequest) GetLeverageTokenMarket(ctx context.Context, opts ..
 		endpoint: "/v5/spot-lever-token/reference",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // Deprecated: PurchaseLeverageToken is deprecated.
@@ -58,8 +58,8 @@ func (s *BybitClientRequest) PurchaseLeverageToken(ctx context.Context, opts ...
 		endpoint: "/v5/spot-lever-token/purchase",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // Deprecated: RedeemLeverageToken is deprecated.
@@ -72,6 +72,6 @@ func (s *BybitClientRequest) RedeemLeverageToken(ctx context.Context, opts ...Re
 		endpoint: "/v5/spot-lever-token/redeem",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
