@@ -1,15 +1,15 @@
-# bybit-go-api
-[![GO 1.21.0](https://img.shields.io/badge/Go-1.21.0-brightgreen.svg)](https://github.com/VictorFrWu/bybit-go-api)   [![Contributor Victor](https://img.shields.io/badge/contributor-Victor-blue.svg)](https://github.com/bybit-exchange/bybit-go-api)   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/VictorFrWu/bybit-go-api/blob/main/LICENSE)
+# bybit-go-api (fork)
+[![GO 1.21.0](https://img.shields.io/badge/Go-1.21.0-brightgreen.svg)](https://go.dev/dl/)   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ## Table of Contents
 - [About](#about)
+- [About this fork](#about-this-fork)
 - [Release](#release)
 - [Development](#development)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contact](#contact)
-- [Contributors](#contributors)
 ## About
-The Official Go Lang API connector for Bybit's HTTP and WebSocket APIs.
+The unofficial Go Lang API connector for Bybit's HTTP and WebSocket APIs.
 
 Dive into a plethora of functionalities:
 - Market Data Retrieval
@@ -25,11 +25,20 @@ Dive into a plethora of functionalities:
 - Earn
 - Spread Trade
 
-bybit-go-api provides an official, robust, and high-performance go connector to Bybit's trading APIs.
+bybit-go-api provides a community-maintained, robust, and high-performance go connector to Bybit's trading APIs.
 
-Initially conceptualized by go developer Victor, this module is now maintained by Bybit's in-house go experts.
+Initially conceptualized by go developer Victor, this module is now maintained by the community.
 
 Your contributions are most welcome!
+
+## About this fork
+
+This is a fork of [bybit-exchange/bybit.go.api](https://github.com/bybit-exchange/bybit.go.api).
+
+Upstream does not accept pull requests: it re-commits external changes under
+Bybit's own name without crediting the original authors. This fork exists to
+**preserve the true authorship of code** and keeps the original `Author`
+information intact.
 
 ## Development
 bybit-go-api is under active development with the latest features and updates from Bybit's API implemented promptly. The module utilizes minimal external libraries to provide a lightweight and efficient experience. If you've made enhancements or fixed bugs, please submit a pull request.
@@ -44,11 +53,11 @@ require (
 )
 ```
 
-To import my package you need just to put the link to your go mode file
-**github.com/bybit-exchange/bybit.go.api**
+To import this fork use the fork's module path in your go.mod:
+**github.com/Igor-Gagarin/bybit.go.api**
 
 ## Usage
-Note: Replace placeholders (like YOUR_API_KEY, links, or other details) with the actual information. You can also customize this template to better fit the actual state and details of your Java API.
+Note: Replace placeholders (like YOUR_API_KEY, links, or other details) with the actual information. You can also customize this template to better fit the actual state and details.
 ### Rest API
 - Place an order by Map
 ```go
@@ -189,23 +198,5 @@ select {}
 ```
 
 ## Contact
-For support, join our Bybit API community on [Telegram](https://t.me/Bybitapi).
-
-## Contributors
-List of other contributors
-<table>
-  <tr>
-    <td align="center">
-        <a href="https://github.com/VictorFrWu">
-            <img src="https://avatars.githubusercontent.com/u/32245754?v=4" width="100px;" alt=""/>
-            <br />
-            <sub>   
-                <b>Victor</b>
-            </sub>
-        </a>
-        <br />
-        <a href="https://github.com/VictorFrWu/bybit.go.api/commits?author=bybit-exchange" title="Code">💻</a>
-        <a href="https://github.com/VictorFrWu/bybit.go.api/commits?author=bybit-exchange" title="Documentation">📖</a>
-    </td>
-  </tr>
-</table>
+For bugs, feature requests and support, open an issue in this repository:
+https://github.com/Igor-Gagarin/bybit.go.api/issues
