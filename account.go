@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/bybit-exchange/bybit.go.api/handlers"
+	"github.com/Igor-Gagarin/bybit.go.api/handlers"
 )
 
 func (s *BybitClientRequest) GetTransactionLog(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
