@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"sync"
 	"time"
 
 	"github.com/google/uuid"
@@ -73,6 +74,7 @@ type WebSocket struct {
 	ctx          context.Context
 	cancel       context.CancelFunc
 	isConnected  bool
+	writeMu      sync.Mutex
 }
 
 type WebsocketOption func(*WebSocket)
@@ -118,16 +120,18 @@ func NewBybitPublicWebSocket(url string, handler MessageHandler) *WebSocket {
 }
 
 func (b *WebSocket) Connect() *WebSocket {
-	var err error
 	wssUrl := b.url
 	if b.maxAliveTime != "" {
 		wssUrl += "?max_alive_time=" + b.maxAliveTime
 	}
-	b.conn, _, err = websocket.DefaultDialer.Dial(wssUrl, nil)
+	conn, _, err := websocket.DefaultDialer.Dial(wssUrl, nil)
 	if err != nil {
 		fmt.Printf("connect to %q error: %s\n", wssUrl, err)
 		return nil
 	}
+	b.writeMu.Lock()
+	b.conn = conn
+	b.writeMu.Unlock()
 	if b.requiresAuthentication() {
 		if err = b.sendAuth(); err != nil {
 			fmt.Println("failed authentication:", fmt.Sprintf("%v", err))
@@ -219,10 +223,13 @@ func ping(b *WebSocket) {
 				fmt.Println("Failed to marshal ping message:", err)
 				continue
 			}
+			b.writeMu.Lock()
 			if err := b.conn.WriteMessage(websocket.TextMessage, jsonPingMessage); err != nil {
+				b.writeMu.Unlock()
 				fmt.Println("Failed to send ping:", err)
 				return
 			}
+			b.writeMu.Unlock()
 			fmt.Println("Ping sent with UTC time:", currentTime)
 
 		case <-b.ctx.Done():
@@ -280,5 +287,7 @@ func (b *WebSocket) sendAsJson(v interface{}) error {
 }
 
 func (b *WebSocket) send(message string) error {
+	b.writeMu.Lock()
+	defer b.writeMu.Unlock()
 	return b.conn.WriteMessage(websocket.TextMessage, []byte(message))
 }
