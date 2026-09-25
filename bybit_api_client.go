@@ -6,8 +6,8 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
-	"github.com/Igor-Gagarin/bybit.go.api/models"
 	"io"
 	"log"
 	"net/http"
@@ -16,12 +16,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/bitly/go-simplejson"
 	"github.com/Igor-Gagarin/bybit.go.api/handlers"
-	jsoniter "github.com/json-iterator/go"
+	"github.com/Igor-Gagarin/bybit.go.api/models"
+	"github.com/bitly/go-simplejson"
 )
-
-var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 type BybitClientRequest struct {
 	c      *Client
