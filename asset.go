@@ -338,8 +338,8 @@ func (s *BybitClientRequest) GetWithdrawalAddress(ctx context.Context, opts ...R
 		endpoint: "/v5/asset/withdraw/query-address",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetSmallBalanceList gets the list of small balances that can be converted
@@ -349,8 +349,8 @@ func (s *BybitClientRequest) GetSmallBalanceList(ctx context.Context, opts ...Re
 		endpoint: "/v5/asset/covert/small-balance-list",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetSmallBalanceConvertQuote gets a quote for converting small balances
@@ -360,8 +360,8 @@ func (s *BybitClientRequest) GetSmallBalanceConvertQuote(ctx context.Context, op
 		endpoint: "/v5/asset/covert/get-quote",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // ExecuteSmallBalanceConvert executes the small balance conversion
@@ -371,8 +371,8 @@ func (s *BybitClientRequest) ExecuteSmallBalanceConvert(ctx context.Context, opt
 		endpoint: "/v5/asset/covert/small-balance-execute",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetSmallBalanceConvertHistory gets the history of small balance conversions
@@ -382,6 +382,6 @@ func (s *BybitClientRequest) GetSmallBalanceConvertHistory(ctx context.Context, 
 		endpoint: "/v5/asset/covert/small-balance-history",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }

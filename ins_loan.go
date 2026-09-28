@@ -85,8 +85,8 @@ func (s *BybitClientRequest) RepayInsLoan(ctx context.Context, opts ...RequestOp
 		endpoint: "/v5/ins-loan/repay-loan",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // Crypto Loan

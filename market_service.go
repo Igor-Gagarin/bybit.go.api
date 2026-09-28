@@ -202,8 +202,8 @@ func (s *BybitClientRequest) GetRPIOrderBook(ctx context.Context, opts ...Reques
 		endpoint: "/v5/market/rpi-orderbook",
 		secType:  secTypeNone,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetMarketTickers(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -293,8 +293,8 @@ func (s *BybitClientRequest) GetNewDeliveryPrice(ctx context.Context, opts ...Re
 		endpoint: "/v5/market/new-delivery-price",
 		secType:  secTypeNone,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) GetLongShortRatio(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -324,8 +324,8 @@ func (s *BybitClientRequest) GetADLAlerts(ctx context.Context, opts ...RequestOp
 		endpoint: "/v5/market/adlAlert",
 		secType:  secTypeNone,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetIndexPriceComponents
@@ -335,8 +335,8 @@ func (s *BybitClientRequest) GetIndexPriceComponents(ctx context.Context, opts .
 		endpoint: "/v5/market/index-price-components",
 		secType:  secTypeNone,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetFeeGroupStructure
@@ -346,6 +346,6 @@ func (s *BybitClientRequest) GetFeeGroupStructure(ctx context.Context, opts ...R
 		endpoint: "/v5/market/fee-group-info",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }

@@ -228,8 +228,8 @@ func (s *BybitClientRequest) GetAccountInstrumentsInfo(ctx context.Context, opts
 		endpoint: "/v5/account/instruments-info",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // ManualBorrow
@@ -239,8 +239,8 @@ func (s *BybitClientRequest) ManualBorrow(ctx context.Context, opts ...RequestOp
 		endpoint: "/v5/account/borrow",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetMaxBorrowableAmount
@@ -250,8 +250,8 @@ func (s *BybitClientRequest) GetMaxBorrowableAmount(ctx context.Context, opts ..
 		endpoint: "/v5/spot-margin-trade/max-borrowable",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetPositionTiers
@@ -261,8 +261,8 @@ func (s *BybitClientRequest) GetPositionTiers(ctx context.Context, opts ...Reque
 		endpoint: "/v5/spot-margin-trade/position-tiers",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetCoinState
@@ -272,8 +272,8 @@ func (s *BybitClientRequest) GetCoinState(ctx context.Context, opts ...RequestOp
 		endpoint: "/v5/spot-margin-trade/coinstate",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetAvailableAmountToRepay
@@ -283,8 +283,8 @@ func (s *BybitClientRequest) GetAvailableAmountToRepay(ctx context.Context, opts
 		endpoint: "/v5/spot-margin-trade/repayment-available-amount",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // ManualRepay
@@ -294,8 +294,8 @@ func (s *BybitClientRequest) ManualRepay(ctx context.Context, opts ...RequestOpt
 		endpoint: "/v5/account/repay",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // ManualRepayWithoutAssetConversion
@@ -305,8 +305,8 @@ func (s *BybitClientRequest) ManualRepayWithoutAssetConversion(ctx context.Conte
 		endpoint: "/v5/account/no-convert-repay",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // SetLimitPriceAction sets the limit order price action when it exceeds the price limit
@@ -316,6 +316,6 @@ func (s *BybitClientRequest) SetLimitPriceAction(ctx context.Context, opts ...Re
 		endpoint: "/v5/account/set-limit-px-action",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }

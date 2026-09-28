@@ -248,8 +248,8 @@ func (s *BybitClientRequest) RepayCollateral(ctx context.Context, opts ...Reques
 		endpoint: "/v5/crypto-loan-flexible/repay-collateral",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // RepayFixedCollateral
@@ -259,8 +259,8 @@ func (s *BybitClientRequest) RepayFixedCollateral(ctx context.Context, opts ...R
 		endpoint: "/v5/crypto-loan-fixed/repay-collateral",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // RenewBorrowOrder
@@ -270,8 +270,8 @@ func (s *BybitClientRequest) RenewBorrowOrder(ctx context.Context, opts ...Reque
 		endpoint: "/v5/crypto-loan-fixed/renew",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetRenewOrderInfo
@@ -281,8 +281,8 @@ func (s *BybitClientRequest) GetRenewOrderInfo(ctx context.Context, opts ...Requ
 		endpoint: "/v5/crypto-loan-fixed/renew-info",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetCryptoLoanMaxCollateralAmount gets the max collateral amount for crypto loan
@@ -292,6 +292,6 @@ func (s *BybitClientRequest) GetCryptoLoanMaxCollateralAmount(ctx context.Contex
 		endpoint: "/v5/crypto-loan/max-collateral-amount",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }

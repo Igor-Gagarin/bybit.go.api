@@ -200,6 +200,6 @@ func (s *BybitClientRequest) GetUserSettingConfig(ctx context.Context, opts ...R
 		endpoint: "/v5/account/user-setting-config",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }

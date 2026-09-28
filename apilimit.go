@@ -12,8 +12,8 @@ func (s *BybitClientRequest) SetApiRateLimit(ctx context.Context, opts ...Reques
 		endpoint: "/v5/apilimit/set",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetApiRateLimit queries the API rate limit
@@ -23,6 +23,6 @@ func (s *BybitClientRequest) GetApiRateLimit(ctx context.Context, opts ...Reques
 		endpoint: "/v5/apilimit/query",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }

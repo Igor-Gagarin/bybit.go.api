@@ -57,8 +57,8 @@ func (s *BybitClientRequest) GetYieldHistory(ctx context.Context, opts ...Reques
 		endpoint: "/v5/earn/yield",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetHourlyYieldHistory
@@ -68,6 +68,6 @@ func (s *BybitClientRequest) GetHourlyYieldHistory(ctx context.Context, opts ...
 		endpoint: "/v5/earn/hourly-yield",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }

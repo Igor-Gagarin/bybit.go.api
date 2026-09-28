@@ -280,7 +280,7 @@ func (s *BybitClientRequest) GetSpotMarginAutoRepayMode(ctx context.Context, opt
 		secType:  secTypeSigned,
 	}
 	r.setParams(s.params)
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, headers, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -288,6 +288,9 @@ func (s *BybitClientRequest) GetSpotMarginAutoRepayMode(ctx context.Context, opt
 	err = json.Unmarshal(data, res)
 	if err != nil {
 		return nil, err
+	}
+	if headers != nil {
+		res.Headers = headers
 	}
 	return res, nil
 }
@@ -305,7 +308,7 @@ func (s *BybitClientRequest) SetSpotMarginAutoRepayMode(ctx context.Context, opt
 		secType:  secTypeSigned,
 	}
 	r.setParams(s.params)
-	data, err := s.c.callAPI(ctx, r, opts...)
+	data, headers, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -313,6 +316,9 @@ func (s *BybitClientRequest) SetSpotMarginAutoRepayMode(ctx context.Context, opt
 	err = json.Unmarshal(data, res)
 	if err != nil {
 		return nil, err
+	}
+	if headers != nil {
+		res.Headers = headers
 	}
 	return res, nil
 }

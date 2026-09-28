@@ -16,8 +16,8 @@ func (s *BybitClientRequest) GetRFQConfig(ctx context.Context, opts ...RequestOp
 		endpoint: "/v5/rfq/config",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 func (s *BybitClientRequest) CreateRFQ(ctx context.Context, opts ...RequestOption) (res *ServerResponse, err error) {
@@ -26,8 +26,8 @@ func (s *BybitClientRequest) CreateRFQ(ctx context.Context, opts ...RequestOptio
 		endpoint: "/v5/rfq/create-rfq",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // CancelRFQ
@@ -38,8 +38,8 @@ func (s *BybitClientRequest) CancelRFQ(ctx context.Context, opts ...RequestOptio
 		endpoint: "/v5/rfq/cancel-rfq",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // CancelAllRFQ
@@ -50,8 +50,8 @@ func (s *BybitClientRequest) CancelAllRFQ(ctx context.Context, opts ...RequestOp
 		endpoint: "/v5/rfq/cancel-all-rfq",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetRFQList
@@ -65,8 +65,8 @@ func (s *BybitClientRequest) GetRFQList(ctx context.Context, opts ...RequestOpti
 		endpoint: "/v5/rfq/list",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetRFQRealtimePrice
@@ -80,8 +80,8 @@ func (s *BybitClientRequest) GetRFQRealtimePrice(ctx context.Context, opts ...Re
 		endpoint: "/v5/rfq/realtime",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetRFQQuoteRealtime
@@ -95,8 +95,8 @@ func (s *BybitClientRequest) GetRFQQuoteRealtime(ctx context.Context, opts ...Re
 		endpoint: "/v5/rfq/quote-realtime",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // CreateRFQQuote
@@ -107,8 +107,8 @@ func (s *BybitClientRequest) CreateRFQQuote(ctx context.Context, opts ...Request
 		endpoint: "/v5/rfq/quote-apply",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // ExecuteRFQQuote
@@ -119,8 +119,8 @@ func (s *BybitClientRequest) ExecuteRFQQuote(ctx context.Context, opts ...Reques
 		endpoint: "/v5/rfq/quote-execute",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // CancelRFQQuote
@@ -131,8 +131,8 @@ func (s *BybitClientRequest) CancelRFQQuote(ctx context.Context, opts ...Request
 		endpoint: "/v5/rfq/quote-cancel",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetRFQQuoteList
@@ -146,8 +146,8 @@ func (s *BybitClientRequest) GetRFQQuoteList(ctx context.Context, opts ...Reques
 		endpoint: "/v5/rfq/quote-list",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetRFQHistory
@@ -161,8 +161,8 @@ func (s *BybitClientRequest) GetRFQHistory(ctx context.Context, opts ...RequestO
 		endpoint: "/v5/rfq/history",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetRFQPublicTrades
@@ -176,8 +176,8 @@ func (s *BybitClientRequest) GetRFQPublicTrades(ctx context.Context, opts ...Req
 		endpoint: "/v5/rfq/public-trades",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // GetRFQTradeList
@@ -191,6 +191,6 @@ func (s *BybitClientRequest) GetRFQTradeList(ctx context.Context, opts ...Reques
 		endpoint: "/v5/rfq/trade-list",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }

@@ -17,8 +17,8 @@ func (s *BybitClientRequest) QueryCap(ctx context.Context, opts ...RequestOption
 		endpoint: "/v5/apilimit/query-cap",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
 
 // QueryAll
@@ -31,6 +31,6 @@ func (s *BybitClientRequest) QueryAll(ctx context.Context, opts ...RequestOption
 		endpoint: "/v5/apilimit/query-all",
 		secType:  secTypeSigned,
 	}
-	data, err := SendRequest(ctx, opts, r, s, err)
-	return GetServerResponse(err, data)
+	data, headers, err := SendRequest(ctx, opts, r, s, err)
+	return GetServerResponse(err, data, headers)
 }
