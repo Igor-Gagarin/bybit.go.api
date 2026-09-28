@@ -84,7 +84,7 @@ func (s *BybitClientRequest) SetSpotMarginLeverage(ctx context.Context, opts ...
 		return nil, err
 	}
 	if headers != nil {
-		res.Headers = headers
+		res.RateLimitHeaders = headers
 	}
 	return res, nil
 }
@@ -112,7 +112,7 @@ func (s *BybitClientRequest) GetSpotMarginState(ctx context.Context, opts ...Req
 		return nil, err
 	}
 	if headers != nil {
-		res.Headers = headers
+		res.RateLimitHeaders = headers
 	}
 	return res, nil
 }
@@ -143,7 +143,7 @@ func (s *BybitClientRequest) ToggleSpotMarginTrade(ctx context.Context, opts ...
 		return nil, err
 	}
 	if headers != nil {
-		res.Headers = headers
+		res.RateLimitHeaders = headers
 	}
 	return res, nil
 }
@@ -290,7 +290,7 @@ func (s *BybitClientRequest) GetSpotMarginAutoRepayMode(ctx context.Context, opt
 		return nil, err
 	}
 	if headers != nil {
-		res.Headers = headers
+		res.RateLimitHeaders = headers
 	}
 	return res, nil
 }
@@ -318,7 +318,7 @@ func (s *BybitClientRequest) SetSpotMarginAutoRepayMode(ctx context.Context, opt
 		return nil, err
 	}
 	if headers != nil {
-		res.Headers = headers
+		res.RateLimitHeaders = headers
 	}
 	return res, nil
 }

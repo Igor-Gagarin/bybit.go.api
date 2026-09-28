@@ -90,6 +90,6 @@ type BatchOrderServerResponse struct {
 			Msg  string `json:"msg"`
 		} `json:"list"`
 	} `json:"retExtInfo"`
-	Time    int64       `json:"time"`
-	Headers http.Header `json:"-"`
+	Time             int64       `json:"time"`
+	RateLimitHeaders http.Header `json:"-"`
 }

@@ -45,4 +45,9 @@ const (
 	apiRequestKey = "X-BAPI-API-KEY"
 	recvWindowKey = "X-BAPI-RECV-WINDOW"
 	signTypeKey   = "X-BAPI-SIGN-TYPE"
+
+	// rateLimitHeaderPrefix matches the response headers that report the
+	// per-endpoint rate limit: X-Bapi-Limit, X-Bapi-Limit-Status and
+	// X-Bapi-Limit-Reset-Timestamp.
+	rateLimitHeaderPrefix = "X-Bapi-Limit"
 )

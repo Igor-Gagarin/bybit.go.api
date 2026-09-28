@@ -14,6 +14,7 @@ import (
 	"net/url"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/Igor-Gagarin/bybit.go.api/handlers"
@@ -28,12 +29,12 @@ type BybitClientRequest struct {
 }
 
 type ServerResponse struct {
-	RetCode    int         `json:"retCode"`
-	RetMsg     string      `json:"retMsg"`
-	Result     interface{} `json:"result"`
-	RetExtInfo struct{}    `json:"retExtInfo"`
-	Time       int64       `json:"time"`
-	Headers    http.Header `json:"-"` // Response headers for rate limit tracking
+	RetCode          int         `json:"retCode"`
+	RetMsg           string      `json:"retMsg"`
+	Result           interface{} `json:"result"`
+	RetExtInfo       struct{}    `json:"retExtInfo"`
+	Time             int64       `json:"time"`
+	RateLimitHeaders http.Header `json:"-"`
 }
 
 func SendRequest(ctx context.Context, opts []RequestOption, r *request, s *BybitClientRequest, err error) ([]byte, http.Header, error) {
@@ -52,7 +53,7 @@ func GetServerResponse(err error, data []byte, headers http.Header) (*ServerResp
 		return nil, err
 	}
 	if headers != nil {
-		resp.Headers = headers
+		resp.RateLimitHeaders = headers
 	}
 	return resp, nil
 }
@@ -67,7 +68,7 @@ func GetBatchOrderServerResponse(err error, data []byte, headers http.Header) (*
 		return nil, err
 	}
 	if headers != nil {
-		resp.Headers = headers
+		resp.RateLimitHeaders = headers
 	}
 	return resp, nil
 }
@@ -224,6 +225,31 @@ func (c *Client) parseRequest(r *request, opts ...RequestOption) (err error) {
 	return nil
 }
 
+// rateLimitHeaders returns only the Bybit rate-limit response headers
+// (X-Bapi-Limit, X-Bapi-Limit-Status, X-Bapi-Limit-Reset-Timestamp) and drops
+// everything else, so infrastructure identifiers and cookies never leave the
+// client. Upstream PR bybit-exchange/bybit.go.api#12 handed callers the whole
+// http.Header; the exchange closed that PR over security concerns, and this
+// fork ships the narrowed version instead. Matching is case-insensitive
+// because the exchange sends X-Bapi-Limit while the request constants above
+// use upper case.
+func rateLimitHeaders(header http.Header) http.Header {
+	if len(header) == 0 {
+		return nil
+	}
+	filtered := make(http.Header)
+	for name, values := range header {
+		if len(name) >= len(rateLimitHeaderPrefix) &&
+			strings.EqualFold(name[:len(rateLimitHeaderPrefix)], rateLimitHeaderPrefix) {
+			filtered[name] = values
+		}
+	}
+	if len(filtered) == 0 {
+		return nil
+	}
+	return filtered
+}
+
 func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption) (data []byte, headers http.Header, err error) {
 	err = c.parseRequest(r, opts...)
 	if err != nil {
@@ -268,9 +294,9 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption)
 		if e != nil {
 			c.debug("failed to unmarshal json: %s", e)
 		}
-		return nil, res.Header, apiErr
+		return nil, rateLimitHeaders(res.Header), apiErr
 	}
-	return data, res.Header, nil
+	return data, rateLimitHeaders(res.Header), nil
 }
 
 // NewPlaceOrderService quick order endpoint

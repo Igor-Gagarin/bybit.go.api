@@ -273,7 +273,7 @@ func (order *Order) Do(ctx context.Context, opts ...RequestOption) (res *ServerR
 		return nil, err
 	}
 	if headers != nil {
-		res.Headers = headers
+		res.RateLimitHeaders = headers
 	}
 	return res, nil
 }
