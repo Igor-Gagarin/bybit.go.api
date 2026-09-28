@@ -261,7 +261,9 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption)
 	}
 	req = req.WithContext(ctx)
 	req.Header = r.header
-	c.debug("request: %#v", req)
+	// Never dump req with %#v: its Header carries the API key and the request
+	// signature for every signed endpoint.
+	c.debug("request: %s %s", req.Method, req.URL)
 	f := c.do
 	if f == nil {
 		f = c.HTTPClient.Do
@@ -282,7 +284,11 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption)
 			err = cerr
 		}
 	}()
-	c.debug("response: %#v", res)
+	// Never dump res with %#v: response headers expose CDN and WAF
+	// identifiers and may carry Set-Cookie. Only the rate-limit headers are
+	// worth keeping, and rateLimitHeaders() has already reduced them for
+	// callers by the time the body is read.
+	c.debug("response: %s", res.Status)
 	c.debug("response body: %s", string(data))
 	c.debug("response status code: %d", res.StatusCode)
 

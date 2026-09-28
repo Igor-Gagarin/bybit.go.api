@@ -16,6 +16,18 @@ import (
 
 type MessageHandler func(message string) error
 
+// DebugWSRequest enables tracing of WebSocket request payloads: subscription
+// args and order parameters. Request credentials are never traced. It is off
+// by default, because a library should not write request payloads to stdout
+// unless asked, and those payloads carry live trading parameters.
+var DebugWSRequest = false
+
+func debugWSRequest(format string, a ...interface{}) {
+	if DebugWSRequest {
+		fmt.Println(fmt.Sprintf(format, a...))
+	}
+}
+
 func (b *WebSocket) handleIncomingMessages() {
 	for {
 		_, message, err := b.conn.ReadMessage()
@@ -157,7 +169,7 @@ func (b *WebSocket) SendSubscription(args []string) (*WebSocket, error) {
 		"op":     "subscribe",
 		"args":   args,
 	}
-	fmt.Println("subscribe msg:", fmt.Sprintf("%v", subMessage["args"]))
+	debugWSRequest("subscribe msg: %v", subMessage["args"])
 	if err := b.sendAsJson(subMessage); err != nil {
 		fmt.Println("Failed to send subscription:", err)
 		return b, err
@@ -179,9 +191,8 @@ func (b *WebSocket) SendRequest(op string, args map[string]interface{}, headers 
 		"op":     op,
 		"args":   []interface{}{args},
 	}
-	fmt.Println("request headers:", fmt.Sprintf("%v", request["header"]))
-	fmt.Println("request op channel:", fmt.Sprintf("%v", request["op"]))
-	fmt.Println("request msg:", fmt.Sprintf("%v", request["args"]))
+	debugWSRequest("request op channel: %v", request["op"])
+	debugWSRequest("request msg: %v", request["args"])
 	if err := b.sendAsJson(request); err != nil {
 		fmt.Println("Failed to send websocket trade request:", err)
 		return b, err
@@ -191,9 +202,8 @@ func (b *WebSocket) SendRequest(op string, args map[string]interface{}, headers 
 }
 
 func (b *WebSocket) SendTradeRequest(tradeTruest map[string]interface{}) (*WebSocket, error) {
-	fmt.Println("trade request headers:", fmt.Sprintf("%v", tradeTruest["header"]))
-	fmt.Println("trade request op channel:", fmt.Sprintf("%v", tradeTruest["op"]))
-	fmt.Println("trade request msg:", fmt.Sprintf("%v", tradeTruest["args"]))
+	debugWSRequest("trade request op channel: %v", tradeTruest["op"])
+	debugWSRequest("trade request msg: %v", tradeTruest["args"])
 	if err := b.sendAsJson(tradeTruest); err != nil {
 		fmt.Println("Failed to send websocket trade request:", err)
 		return b, err
@@ -268,14 +278,12 @@ func (b *WebSocket) sendAuth() error {
 
 	// Convert to hexadecimal instead of base64
 	signature := hex.EncodeToString(h.Sum(nil))
-	fmt.Println("signature generated : " + signature)
 
 	authMessage := map[string]interface{}{
 		"req_id": uuid.New(),
 		"op":     "auth",
 		"args":   []interface{}{b.apiKey, expires, signature},
 	}
-	fmt.Println("auth args:", fmt.Sprintf("%v", authMessage["args"]))
 	return b.sendAsJson(authMessage)
 }
 
