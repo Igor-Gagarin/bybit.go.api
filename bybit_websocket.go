@@ -30,7 +30,11 @@ func debugWSRequest(format string, a ...interface{}) {
 
 func (b *WebSocket) handleIncomingMessages() {
 	for {
-		_, message, err := b.conn.ReadMessage()
+		conn := b.getConn()
+		if conn == nil {
+			return
+		}
+		_, message, err := conn.ReadMessage()
 		if err != nil {
 			fmt.Println("Error reading:", err)
 			b.setConnected(false)
@@ -87,6 +91,7 @@ type WebSocket struct {
 	ctx          context.Context
 	cancel       context.CancelFunc
 	isConnected  bool
+	connMu       sync.Mutex
 	writeMu      sync.Mutex
 	mu           sync.RWMutex
 }
@@ -103,6 +108,22 @@ func (b *WebSocket) getConnected() bool {
 	b.mu.RLock()
 	defer b.mu.RUnlock()
 	return b.isConnected
+}
+
+func (b *WebSocket) getConn() *websocket.Conn {
+	b.connMu.Lock()
+	defer b.connMu.Unlock()
+	return b.conn
+}
+
+func (b *WebSocket) swapConn(conn *websocket.Conn) {
+	b.connMu.Lock()
+	old := b.conn
+	b.conn = conn
+	b.connMu.Unlock()
+	if old != nil {
+		_ = old.Close()
+	}
 }
 
 type WebsocketOption func(*WebSocket)
@@ -157,9 +178,7 @@ func (b *WebSocket) Connect() *WebSocket {
 		fmt.Printf("connect to %q error: %s\n", wssUrl, err)
 		return nil
 	}
-	b.writeMu.Lock()
-	b.conn = conn
-	b.writeMu.Unlock()
+	b.swapConn(conn)
 	if b.requiresAuthentication() {
 		if err = b.sendAuth(); err != nil {
 			fmt.Println("failed authentication:", fmt.Sprintf("%v", err))
@@ -249,8 +268,12 @@ func ping(b *WebSocket) {
 				fmt.Println("Failed to marshal ping message:", err)
 				continue
 			}
+			conn := b.getConn()
+			if conn == nil {
+				return
+			}
 			b.writeMu.Lock()
-			if err := b.conn.WriteMessage(websocket.TextMessage, jsonPingMessage); err != nil {
+			if err := conn.WriteMessage(websocket.TextMessage, jsonPingMessage); err != nil {
 				b.writeMu.Unlock()
 				fmt.Println("Failed to send ping:", err)
 				return
@@ -266,9 +289,15 @@ func ping(b *WebSocket) {
 }
 
 func (b *WebSocket) Disconnect() error {
-	b.cancel()
+	if b.cancel != nil {
+		b.cancel()
+	}
 	b.setConnected(false)
-	return b.conn.Close()
+	conn := b.getConn()
+	if conn == nil {
+		return nil
+	}
+	return conn.Close()
 }
 
 func (b *WebSocket) requiresAuthentication() bool {
@@ -311,7 +340,11 @@ func (b *WebSocket) sendAsJson(v interface{}) error {
 }
 
 func (b *WebSocket) send(message string) error {
+	conn := b.getConn()
+	if conn == nil {
+		return fmt.Errorf("websocket: not connected")
+	}
 	b.writeMu.Lock()
 	defer b.writeMu.Unlock()
-	return b.conn.WriteMessage(websocket.TextMessage, []byte(message))
+	return conn.WriteMessage(websocket.TextMessage, []byte(message))
 }
