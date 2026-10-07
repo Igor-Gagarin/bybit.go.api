@@ -47,6 +47,9 @@ func (b *WebSocket) handleIncomingMessages(ctx context.Context) {
 				continue
 			}
 		}
+		if b.readIdleTimeout > 0 {
+			_ = conn.SetReadDeadline(time.Now().Add(b.readIdleTimeout))
+		}
 		_, message, err := conn.ReadMessage()
 		if err != nil {
 			if ctx.Err() != nil {
@@ -60,7 +63,12 @@ func (b *WebSocket) handleIncomingMessages(ctx context.Context) {
 				continue
 			}
 			fmt.Println("Error reading:", err)
+			b.setCloseErr(err)
 			b.setConnected(false)
+			if !b.autoReconnect {
+				b.cancelCtx()
+				return
+			}
 			select {
 			case <-ctx.Done():
 				return
@@ -73,7 +81,12 @@ func (b *WebSocket) handleIncomingMessages(ctx context.Context) {
 			err := b.onMessage(string(message))
 			if err != nil {
 				fmt.Println("Error handling message:", err)
+				b.setCloseErr(err)
 				b.setConnected(false)
+				if !b.autoReconnect {
+					b.cancelCtx()
+					return
+				}
 			}
 		}
 	}
@@ -89,7 +102,7 @@ func (b *WebSocket) monitorConnection(ctx context.Context) {
 			return
 		case <-ticker.C:
 		}
-		if !b.getConnected() && ctx.Err() == nil {
+		if b.autoReconnect && !b.getConnected() && ctx.Err() == nil {
 			fmt.Println("Attempting to reconnect...")
 			if err := b.redial(); err != nil {
 				fmt.Println("Reconnection failed:")
@@ -103,23 +116,26 @@ func (b *WebSocket) SetMessageHandler(handler MessageHandler) {
 }
 
 type WebSocket struct {
-	conn         *websocket.Conn
-	connChanged  chan struct{}
-	url          string
-	apiKey       string
-	apiSecret    string
-	maxAliveTime string
-	pingInterval int
-	onMessage    MessageHandler
-	ctx          context.Context
-	cancel       context.CancelFunc
-	isConnected  bool
-	started      bool
-	connMu       sync.Mutex
-	writeMu      sync.Mutex
-	redialMu     sync.Mutex
-	mu           sync.RWMutex
-	lifeWG       sync.WaitGroup
+	conn            *websocket.Conn
+	connChanged     chan struct{}
+	url             string
+	apiKey          string
+	apiSecret       string
+	maxAliveTime    string
+	pingInterval    int
+	autoReconnect   bool
+	readIdleTimeout time.Duration
+	closeErr        error
+	onMessage       MessageHandler
+	ctx             context.Context
+	cancel          context.CancelFunc
+	isConnected     bool
+	started         bool
+	connMu          sync.Mutex
+	writeMu         sync.Mutex
+	redialMu        sync.Mutex
+	mu              sync.RWMutex
+	lifeWG          sync.WaitGroup
 }
 
 // setConnected / getConnected guard isConnected, which is accessed concurrently
@@ -134,6 +150,21 @@ func (b *WebSocket) getConnected() bool {
 	b.mu.RLock()
 	defer b.mu.RUnlock()
 	return b.isConnected
+}
+
+func (b *WebSocket) setCloseErr(err error) {
+	b.mu.Lock()
+	b.closeErr = err
+	b.mu.Unlock()
+}
+
+func (b *WebSocket) cancelCtx() {
+	b.mu.Lock()
+	cancel := b.cancel
+	b.mu.Unlock()
+	if cancel != nil {
+		cancel()
+	}
 }
 
 func (b *WebSocket) getConn() *websocket.Conn {
@@ -154,6 +185,12 @@ func (b *WebSocket) swapConn(conn *websocket.Conn) {
 
 type WebsocketOption func(*WebSocket)
 
+func WithAutoReconnect(enabled bool) WebsocketOption {
+	return func(c *WebSocket) {
+		c.autoReconnect = enabled
+	}
+}
+
 func WithPingInterval(pingInterval int) WebsocketOption {
 	return func(c *WebSocket) {
 		c.pingInterval = pingInterval
@@ -168,12 +205,14 @@ func WithMaxAliveTime(maxAliveTime string) WebsocketOption {
 
 func NewBybitPrivateWebSocket(url, apiKey, apiSecret string, handler MessageHandler, options ...WebsocketOption) *WebSocket {
 	c := &WebSocket{
-		url:          url,
-		apiKey:       apiKey,
-		apiSecret:    apiSecret,
-		maxAliveTime: "",
-		pingInterval: 20,
-		onMessage:    handler,
+		url:             url,
+		apiKey:          apiKey,
+		apiSecret:       apiSecret,
+		maxAliveTime:    "",
+		pingInterval:    20,
+		autoReconnect:   true,
+		readIdleTimeout: 25 * time.Second,
+		onMessage:       handler,
 	}
 	c.ctx, c.cancel = context.WithCancel(context.Background())
 	c.connChanged = make(chan struct{})
@@ -186,14 +225,20 @@ func NewBybitPrivateWebSocket(url, apiKey, apiSecret string, handler MessageHand
 	return c
 }
 
-func NewBybitPublicWebSocket(url string, handler MessageHandler) *WebSocket {
+func NewBybitPublicWebSocket(url string, handler MessageHandler, options ...WebsocketOption) *WebSocket {
 	c := &WebSocket{
-		url:          url,
-		pingInterval: 20, // default is 20 seconds
-		onMessage:    handler,
+		url:             url,
+		pingInterval:    20,
+		autoReconnect:   true,
+		readIdleTimeout: 25 * time.Second,
+		onMessage:       handler,
 	}
 	c.ctx, c.cancel = context.WithCancel(context.Background())
 	c.connChanged = make(chan struct{})
+
+	for _, opt := range options {
+		opt(c)
+	}
 
 	return c
 }
@@ -269,6 +314,18 @@ func (b *WebSocket) startLifecycle() {
 		defer b.lifeWG.Done()
 		ping(b, ctx)
 	}()
+}
+
+func (b *WebSocket) Done() <-chan struct{} {
+	b.mu.RLock()
+	defer b.mu.RUnlock()
+	return b.ctx.Done()
+}
+
+func (b *WebSocket) CloseError() error {
+	b.mu.RLock()
+	defer b.mu.RUnlock()
+	return b.closeErr
 }
 
 func (b *WebSocket) SendSubscription(args []string) (*WebSocket, error) {
@@ -374,9 +431,9 @@ func (b *WebSocket) Disconnect() error {
 	}
 	b.setConnected(false)
 	conn := b.getConn()
-	var closeErr error
+	var cerr error
 	if conn != nil {
-		closeErr = conn.Close()
+		cerr = conn.Close()
 	}
 	finished := make(chan struct{})
 	go func() {
@@ -387,7 +444,7 @@ func (b *WebSocket) Disconnect() error {
 	case <-finished:
 	case <-time.After(2 * time.Second):
 	}
-	return closeErr
+	return cerr
 }
 
 func (b *WebSocket) requiresAuthentication() bool {
